@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Corner 🗣️</title>
+  <link rel="icon" type="image/png" href="/no-bg-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-theme="dark" data-stage="intro">
+  <header class="site-header">
+    <div class="brand">
+      <img src="/no-bg-icon.png" alt="The Corner Logo" class="brand-icon">
+      <div>
+        <h1>The Corner</h1>
+        <p>"A quiet corner of the internet to talk to someone new."</p>
+      </div>
+    </div>
+    <button id="themeToggle" class="ghost-btn theme-toggle" aria-label="Toggle theme">🌙</button>
+  </header>
+
+  <main class="layout">
+    <section class="hero" id="introPanel">
+      <div class="hero-copy">
+        <h2>Before you join a chat…</h2>
+        <p class="lead">Tell us what people want to call you and what you’re into. We’ll handle the rest.</p>
+      </div>
+
+      <form id="startForm" class="start-card">
+        <label class="field">
+          <span>Nickname</span>
+          <input type="text" id="nickname" name="nickname" placeholder="Name" maxlength="40">
+        </label>
+
+        <div class="field avatar-upload">
+          <span>Profile photo</span>
+          <label class="avatar-upload-box">
+            <input type="file" id="avatarUpload" accept="image/*">
+            <div class="avatar-preview" id="avatarPreview">
+              <span>+</span>
+            </div>
+            <div class="avatar-upload-copy">
+              <p>Upload an image (JPG, PNG, GIF, up to 5 MB).</p>
+              <button type="button" class="ghost-btn xs" id="removeAvatarBtn">Remove photo</button>
+            </div>
+          </label>
+        </div>
+
+        <fieldset class="field interests">
+          <legend>Pick your vibe (optional)</legend>
+          <label><input type="checkbox" value="Gaming"> 🎮 Gaming</label>
+          <label><input type="checkbox" value="Anime"> 🍥 Anime &amp; Manga</label>
+          <label><input type="checkbox" value="Music"> 🎵 Music</label>
+          <label><input type="checkbox" value="Movies"> 🎬 Movies &amp; TV</label>
+          <label><input type="checkbox" value="School"> 📚 School &amp; Study</label>
+          <label><input type="checkbox" value="Tech"> 💻 Tech &amp; Gadgets</label>
+          <label><input type="checkbox" value="Art"> 🎨 Art &amp; Design</label>
+          <label><input type="checkbox" value="Sports"> 🏅 Sports</label>
+          <label><input type="checkbox" value="Memes"> 😂 Memes &amp; Jokes</label>
+          <label><input type="checkbox" value="DeepTalk"> 🌌 Deep Talk</label>
+          <label><input type="checkbox" value="Advice"> 💬 Advice &amp; Rants</label>
+          <label><input type="checkbox" value="Roblox"> 🕹️ Roblox &amp; Hangouts</label>
+          <label><input type="checkbox" value="DailyLife"> 😊 Daily Life</label>
+          <label><input type="checkbox" value="Pets"> 🐾 Pets &amp; Animals</label>
+          <label><input type="checkbox" value="Travel"> ✈️ Travel &amp; Places</label>
+          <label><input type="checkbox" value="Random"> ❓ Random Questions</label>
+        </fieldset>
+
+        <label class="agreement">
+          <input type="checkbox" id="rulesCheck">
+          <span>I agree to keep the conversation safe and follow the <button type="button" class="link-btn"
+              id="openRulesBtn">rules</button>.</span>
+        </label>
+
+        <button type="submit" class="primary-btn" id="startBtn" disabled>Connect with others</button>
+        <p class="helper-inline">Need to tweak something later? You can always change it from the chat view.</p>
+      </form>
+
+      <div class="profile-card" id="profileCard">
+        <div class="profile-row">
+          <div class="profile-identity">
+            <div class="avatar-pill xl" id="profileAvatar"></div>
+            <div>
+              <p class="label">Nickname</p>
+              <h3 id="profileNickname">Stranger</h3>
+              <p class="label">Country</p>
+              <p id="profileCountry" class="muted">Detecting location...</p>
+            </div>
+          </div>
+          <div>
+            <p class="label">Vibe tags</p>
+            <div id="selectedInterests" class="chips muted">No tags selected</div>
+          </div>
+        </div>
+        <button type="button" class="ghost-btn" id="editProfileBtn">Go back</button>
+      </div>
+    </section>
+
+    <section class="chat-panel" id="chatPanel">
+      <div class="chat-header">
+        <div class="status-copy">
+          <p class="status-label">Status</p>
+          <p id="statusText">Press connect to find someone.</p>
+          <div class="partner-meta">
+            <div class="avatar-pill sm" id="partnerAvatar"></div>
+            <div>
+              <p id="partnerInfo" class="partner-info">Partner info shows here once matched.</p>
+              <p id="partnerMeta" class="partner-meta-detail muted"></p>
+            </div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="ghost-btn edit-profile-inline" id="editProfileAltBtn">Go back</button>
+          <div class="online-chip">
+            <span class="pulse"></span>
+            <span id="onlineCount">0 online</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-window" id="chatWindow">
+        <div class="placeholder">
+          <p>Save your profile to unlock the connect button.</p>
+        </div>
+      </div>
+
+      <div class="typing" id="typingIndicator" aria-live="polite">
+        <span id="typingText">Stranger is typing</span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+
+      <div class="chat-input">
+        <textarea id="messageInput" placeholder="Type a message..." autocomplete="off" disabled></textarea>
+        <button id="sendBtn" class="primary-btn" disabled>Send</button>
+      </div>
+
+      <div class="chat-actions">
+        <button id="connectBtn" class="primary-btn" disabled>Connect</button>
+        <button id="nextBtn" class="ghost-btn" disabled>Next</button>
+        <button id="disconnectBtn" class="ghost-btn" disabled>Disconnect</button>
+        <button id="blockBtn" class="danger-btn" disabled>Block</button>
+        <button id="reportBtn" class="danger-btn" disabled>Report</button>
+      </div>
+
+      <div class="helper-text">
+        <p>Hitting <strong>Enter</strong> will send your message. Keep it friendly.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>The Corner is a learning project showcasing queue-based matching and SSE real-time messaging. Developed by UC
+      BSIT Students.
+    </p>
+    <button type="button" class="link-btn" id="openRulesFooterBtn">Read safety rules</button>
+  </footer>
+
+  <div class="modal" id="reportModal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-labelledby="reportTitle">
+      <button class="modal-close ghost-btn" id="closeReportModal" aria-label="Close report form">✕</button>
+      <h3 id="reportTitle">Report this conversation</h3>
+      <p class="muted">Only use this when someone violates The Corner rules.</p>
+      <form id="reportForm">
+        <label class="field">
+          <span>Reason</span>
+          <select id="reportCategory">
+            <option value="spam">Spam / advertising</option>
+            <option value="harassment">Harassment or bullying</option>
+            <option value="inappropriate">Inappropriate content</option>
+            <option value="safety">Sharing personal info</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Details (optional)</span>
+          <textarea id="reportDetails" rows="3" maxlength="200" placeholder="Add any helpful context."></textarea>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="ghost-btn" id="cancelReportBtn">Cancel</button>
+          <button type="submit" class="danger-btn">Submit report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="blockModal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-labelledby="blockTitle">
+      <button class="modal-close ghost-btn" id="closeBlockModal" aria-label="Close block confirmation">✕</button>
+      <h3 id="blockTitle">Block this user?</h3>
+      <p class="muted">You won't be matched with this user again during this session. This will reset when you refresh or leave the site.</p>
+      <div class="modal-actions">
+        <button type="button" class="ghost-btn" id="cancelBlockBtn">Cancel</button>
+        <button type="button" class="danger-btn" id="confirmBlockBtn">Block user</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="rulesModal" aria-hidden="true">
+    <div class="modal-dialog rules-dialog" role="dialog" aria-labelledby="rulesTitle">
+      <button class="modal-close ghost-btn" id="closeRulesModal" aria-label="Close rules">✕</button>
+      <h3 id="rulesTitle">‼️RULES | PLEASE READ‼️</h3>
+      <p class="muted">The Corner should feel safe, respectful, and school-friendly. By joining a chat you agree to:</p>
+      <ol>
+        <li>Keep every conversation kind—no bullying, harassment, or hate speech.</li>
+        <li>Never share personal information (names, IDs, passwords, addresses, phone numbers, etc.).</li>
+        <li>Report any conversation that violates these guidelines.</li>
+        <li>Understand that chats may be logged for moderation and academic analysis.</li>
+        <li>Use “Next” or “Disconnect” anytime something feels uncomfortable.</li>
+      </ol>
+      <p class="muted">If you see someone breaking the rules, please use the Report button. Questions about the project?
+        Reach out to the UC BSIT dev team.</p>
+      <div class="modal-actions">
+        <button type="button" class="primary-btn" id="ackRulesBtn">I understand</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js" type="module"></script>
+</body>
+
+</html>

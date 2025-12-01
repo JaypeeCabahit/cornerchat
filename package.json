@@ -1,0 +1,17 @@
+{
+  "name": "randomtext-chat",
+  "version": "1.0.0",
+  "description": "Classic Omegle-style random text chat demo for BSIT project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "chat",
+    "sse",
+    "random",
+    "matching"
+  ],
+  "author": "",
+  "license": "MIT"
+}
